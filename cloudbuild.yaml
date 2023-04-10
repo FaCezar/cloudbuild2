@@ -9,7 +9,7 @@ steps:
 #Call the twistcli.sh script passing the image built in the previous step as a PARAMETER
 #all the variables are passed to the Container in the ENV: section
 - name: 'gcr.io/$PROJECT_ID/cloud-build-twistcli'
-  args: ['/twistcli.sh', 'gcr.io/$PROJECT_ID/demo-cloudbuild-test:latest']
+  args: ['/twistcli.sh', 'gcr.io/$PROJECT_ID/demo-cloudbuild:latest']
   env:
   - 'TL_CONSOLE_URL=$_TWISTLOCK_URL'
   - 'TL_USER=$_TWISTLOCK_USER'
