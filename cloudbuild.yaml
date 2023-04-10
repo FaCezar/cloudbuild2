@@ -13,7 +13,7 @@ steps:
   env:
   - 'TL_CONSOLE_URL=$_TWISTLOCK_URL'
   - 'TL_USER=$_TWISTLOCK_USER'
-  - 'TL_SECRET_NAME=$_TWISTLOCK_SECRET_NAME'
+  - 'TL_PASSWORD=$_TWISTLOCK_PASSWORD'
 
 #If the PRISMA SCAN verdict is continue the Image is pushed to the Google Container Registry
 - name: 'gcr.io/cloud-builders/docker'
@@ -23,7 +23,7 @@ steps:
 substitutions:
     _TWISTLOCK_URL: 'https://us-west1.cloud.twistlock.com/us-4-161056307'
     _TWISTLOCK_USER: 'c48fb25f-d70e-4d83-b302-efabe73ce6d7'
-    _TWISTLOCK_SECRET_NAME:  'TWISTLOCK_PASS'
+    _TWISTLOCK_PASSWORD:  'zXKSttr4KQ+wSRkgRZdppiYbnCM='
 
 #In case the image is pushed to the registry it is displayed in the Pipeline log.
 images:
