@@ -27,4 +27,4 @@ substitutions:
 
 #In case the image is pushed to the registry it is displayed in the Pipeline log.
 images:
-- 'gcr.io/$PROJECT_ID/demo-cloudbuild-test'
+- 'gcr.io/$PROJECT_ID/demo-cloudbuild-latest'
