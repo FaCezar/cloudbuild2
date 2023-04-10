@@ -13,7 +13,7 @@ steps:
   env:
   - 'TL_CONSOLE_URL=$_TWISTLOCK_URL'
   - 'TL_USER=$_TWISTLOCK_USER'
-  - 'TL_PASSWORD=$_TWISTLOCK_PASSWORD'
+  - 'TL_PASS=$_TWISTLOCK_PASSWORD'
 
 #If the PRISMA SCAN verdict is continue the Image is pushed to the Google Container Registry
 - name: 'gcr.io/cloud-builders/docker'
