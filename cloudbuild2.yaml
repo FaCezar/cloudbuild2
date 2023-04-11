@@ -1,0 +1,30 @@
+steps:
+
+#Build the Image
+#We are using a Node:12 image tagged as demo-cloudbuild:latest
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/demo-cloudbuild:latest', '.']
+
+
+#Call the twistcli.sh script passing the image built in the previous step as a PARAMETER
+#all the variables are passed to the Container in the ENV: section
+- name: 'gcr.io/$PROJECT_ID/cloud-build-twistcli'
+  args: ['/twistcli.sh', 'gcr.io/$PROJECT_ID/demo-cloudbuild:latest']
+  env:
+  - 'TL_CONSOLE_URL=$_TWISTLOCK_URL'
+  - 'TL_USER=$_TWISTLOCK_USER'
+  - 'TL_PASS=$_TWISTLOCK_PASSWORD'
+
+#If the PRISMA SCAN verdict is continue the Image is pushed to the Google Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/demo-cloudbuild:latest']
+
+#Here you define all the information needed to connect to Prisma 
+substitutions:
+    _TWISTLOCK_URL: 'https://us-west1.cloud.twistlock.com/us-4-161056307'
+    _TWISTLOCK_USER: 'c48fb25f-d70e-4d83-b302-efabe73ce6d7'
+    _TWISTLOCK_PASSWORD:  'zXKSttr4KQ+wSRkgRZdppiYbnCM='
+
+#In case the image is pushed to the registry it is displayed in the Pipeline log.
+images:
+- 'gcr.io/$PROJECT_ID/demo-cloudbuild-latest'
