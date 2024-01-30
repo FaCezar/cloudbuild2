@@ -9,19 +9,19 @@ steps:
 #Call the twistcli.sh script passing the image built in the previous step as a PARAMETER
 #all the variables are passed to the Container in the ENV: section
 - name: 'gcr.io/$PROJECT_ID/cloud-build-twistcli'
-  args: ['/twistcli.sh', 'gcr.io/$PROJECT_ID/ubuntu:latest']
+  args: ['/twistcli.sh', 'gcr.io/$PROJECT_ID/ubuntu:latest' && 'run', 'sudo /tmp/twistcli sandbox', '--address ${_TWISTLOCK_CONSOLE}', '-u ${_TWISTLOCK_USER}', '-p ${_TWISTLOCK_PASSWORD}', '--analysis-duration 10s']
   env:
   - 'TL_CONSOLE_URL=$_TWISTLOCK_URL'
   - 'TL_USER=$_TWISTLOCK_USER'
   - 'TL_PASS=$_TWISTLOCK_PASSWORD'
 
 #Direct call to the twistcli sandboxing process, in order to validate malware existence and also possible network calls
-- name: 'gcr.io/$PROJECT_ID/prisma-cloud-sandbox'
-  args: [ 'run', 'sudo /tmp/twistcli sandbox', '--address ${_TWISTLOCK_CONSOLE}', '-u ${_TWISTLOCK_USER}', '-p ${_TWISTLOCK_PASSWORD}', '--analysis-duration 10s']
-  env:
-  - 'TL_USER=$_TWISTLOCK_USER'
-  - 'TL_PASS=$_TWISTLOCK_PASSWORD'
-  - 'TL_CONSOLE_SANDBOX=$_TWISTLOCK_CONSOLE'
+#- name: 'gcr.io/$PROJECT_ID/prisma-cloud-sandbox'
+#  args: [ 'run', 'sudo /tmp/twistcli sandbox', '--address ${_TWISTLOCK_CONSOLE}', '-u ${_TWISTLOCK_USER}', '-p ${_TWISTLOCK_PASSWORD}', '--analysis-duration 10s']
+#  env:
+#  - 'TL_USER=$_TWISTLOCK_USER'
+#  - 'TL_PASS=$_TWISTLOCK_PASSWORD'
+#  - 'TL_CONSOLE_SANDBOX=$_TWISTLOCK_CONSOLE'
   
 #If the PRISMA SCAN verdict is continue the Image is pushed to the Google Container Registry
 - name: 'gcr.io/cloud-builders/docker'
