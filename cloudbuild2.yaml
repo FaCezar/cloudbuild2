@@ -15,6 +15,14 @@ steps:
   - 'TL_USER=$_TWISTLOCK_USER'
   - 'TL_PASS=$_TWISTLOCK_PASSWORD'
 
+#Direct call to the twistcli sandboxing process, in order to validate malware existence and also possible network calls
+- name: 'gcr.io/$PROJECT_ID/prisma-cloud-sandbox
+  args: [ 'run', 'sudo /tmp/twistcli sandbox', '--address ${TL_CONSOLE_SANDBOX}', '-u ${TL_USER}', '-p ${TL_PASS}', '--analysis-duration 10s']
+  env:
+  - 'TL_USER=$_TWISTLOCK_USER'
+  - 'TL_PASS=$_TWISTLOCK_PASSWORD'
+  - 'TL_CONSOLE_SANDBOX=$_TWISTLOCK_CONSOLE'
+  
 #If the PRISMA SCAN verdict is continue the Image is pushed to the Google Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/ubuntu:latest']
@@ -22,9 +30,10 @@ steps:
 #Here you define all the information needed to connect to Prisma 
 substitutions:
     _TWISTLOCK_URL: 'https://us-west1.cloud.twistlock.com/us-4-161056307'
-    _TWISTLOCK_USER: '8fe0c1b9-5773-4be5-992e-1b8d9c873777'
-    _TWISTLOCK_PASSWORD:  'x+baN78VHdZuCqjbJftMMvbgdNY='
-
+    _TWISTLOCK_USER: '83a75a2b-9fdc-4ce0-81c1-08b0ffd542bd'
+    _TWISTLOCK_PASSWORD:  '7xd6RTqw62f3YzLcs6qhuKZnwBE='
+    _TWISTLOCK_CONSOLE:  'https://us-west1.cloud.twistlock.com/us-4-161056307:8083'
+    
 #In case the image is pushed to the registry it is displayed in the Pipeline log.
 images:
 - 'gcr.io/$PROJECT_ID/ubuntu:latest'
