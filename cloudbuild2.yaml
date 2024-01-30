@@ -16,7 +16,7 @@ steps:
   - 'TL_PASS=$_TWISTLOCK_PASSWORD'
 
 #Direct call to the twistcli sandboxing process, in order to validate malware existence and also possible network calls
-- name: 'gcr.io/$PROJECT_ID/prisma-cloud-sandbox
+- name: 'gcr.io/$PROJECT_ID/prisma-cloud-sandbox'
   args: [ 'run', 'sudo /tmp/twistcli sandbox', '--address ${TL_CONSOLE_SANDBOX}', '-u ${TL_USER}', '-p ${TL_PASS}', '--analysis-duration 10s']
   env:
   - 'TL_USER=$_TWISTLOCK_USER'
